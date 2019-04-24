@@ -1,4 +1,85 @@
+@import url('https://fonts.googleapis.com/css?family=Work+Sans');
+
+body {
+  margin: 0;
+  background: #EEEEEE;
+  font-family: Work Sans;
+  font-size: 12px;
+}
+
 .App {
-  font-family: sans-serif;
+  padding: 25px;
+}
+
+.container {
+  padding: 15px 10px;
+  margin: 0 auto;
+  background: #FFF;
+  width: 412px;
+}
+
+.header {
+  margin: 0;
+  font-weight: 500;
+  font-size: 14px;
+  color: #333333;
+}
+
+.header--secondary {
+  margin: 16px 0;
+  font-weight: 300;
+  font-size: 12px;
+  color: #666666;
+}
+
+.button {
+  border: 0;
+  margin-top: 10px;
+  padding: 15px 30px;
+  min-width: 140px;
+  font-size: 12px;
+  font-weight: bold;
   text-align: center;
+  text-transform: uppercase;
+  color: #FFF;
+  background: #333;
+}
+
+.input {
+  font-size: 12px;
+  background: #FFF;
+  border: 1px solid #CCC;
+  box-sizing: border-box;
+  height: 44px;
+  width: 300px;
+  padding: 0 5px;
+  color: #333333;
+}
+
+.input--small {
+  width: 100px;
+  margin-left: 10px;
+}
+
+.error {
+  border-color: crimson;
+}
+
+.card {
+  background: #F2F2F2;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin: 10px 0;
+  justify-content: space-between;
+}
+
+.card-discount {
+  font-weight: bold;
+  color: #333333;
+}
+
+.card-number {
+  margin: 3px 0;
+  color: #666666;
 }

@@ -1,0 +1,6 @@
+{
+  "cards": [
+    { "id": 1, "discount": "20" },
+    { "id": 2, "discount": "30" }
+  ]
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import GiftCard from "./GiftCard";
+import api from './api';
 
 class GiftCardsContainer extends React.Component {
   constructor(props) {
@@ -7,10 +8,26 @@ class GiftCardsContainer extends React.Component {
     this.state = {
       isCard: false,
       cardNumber: "",
+      isValidCardNumber: true,
       securityCode: "",
+      isValidSecurityCode: true,
       submittedCards: []
     };
   }
+
+  clearForm = () => {
+    this.setState(() => ({
+      cardNumber: "",
+      isValidCardNumber: true,
+      securityCode: "",
+      isValidSecurityCode: true,
+    }))
+  };
+
+  validate = () => {
+    const { cardNumber, securityCode } = this.state;
+    return api.validateCard(cardNumber.replace(/\D/g,''), securityCode.replace(/\D/g,''));
+  };
 
   handleInputChange = event => {
     const target = event.target;
@@ -24,61 +41,90 @@ class GiftCardsContainer extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.setState(prevState => ({
-      submittedCards: [
-        ...prevState.submittedCards,
-        {
-          cardNumber: prevState.cardNumber,
-          discount: 20
-        }
-      ]
-    }));
+    this.validate().then(res => {
+      if (res.isValidCardNumber && res.isValidSecurityCode) {
+        this.setState(prevState => ({
+          cardNumber: "",
+          isValidCardNumber: true,
+          securityCode: "",
+          isValidSecurityCode: true,
+          submittedCards: [
+            ...prevState.submittedCards,
+            {
+              cardNumber: prevState.cardNumber,
+              discount: res.discount,
+            }
+          ]
+        }));
+      } else {
+        this.setState(prevState => ({
+          cardNumber: res.cardNumber,
+          isValidCardNumber: res.isValidCardNumber,
+          securityCode: res.securityCode,
+          isValidSecurityCode: res.isValidSecurityCode,
+        }));
+      }
+    });
+
   };
 
+
   render() {
+    const {
+      isCard,
+      cardNumber,
+      isValidCardNumber,
+      securityCode,
+      isValidSecurityCode,
+      submittedCards
+    } = this.state;
     return (
-      <>
-        <div>Gift</div>
+      <section className="container">
+        <h1 className="header">Gift Cards</h1>
         <form onSubmit={this.handleSubmit}>
           <label>
-            Do you have a gift card?
             <input
               name="isCard"
               type="checkbox"
-              checked={this.state.isCard}
+              checked={isCard}
               onChange={this.handleInputChange}
             />
+            Do you have a gift card?
           </label>
-          {this.state.isCard && (
-            <>
-              <p>
+          {isCard && (
+            <section>
+              <h2 className="header header--secondary">
                 Please enter the 19-digit number and code from your gift card
                 below.
-              </p>
-              {this.state.submittedCards.map(card => (
+              </h2>
+              {submittedCards.map((card, index) => (
                 <GiftCard
-                  key={card.cardNumber}
+                  key={`${card.cardNumber}_${index}`}
                   cardNumber={card.cardNumber}
                   discount={card.discount}
                 />
               ))}
-              <input
-                name="cardNumber"
-                type="text"
-                value={this.state.cardNumber}
-                onChange={this.handleInputChange}
-              />
-              <input
-                name="securityCode"
-                type="number"
-                value={this.state.securityCode}
-                onChange={this.handleInputChange}
-              />
-              <button type="submit">Apply</button>
-            </>
+              <div>
+                <input
+                  className={`input ${isValidCardNumber ? '' : "error"}`}
+                  name="cardNumber"
+                  type="text"
+                  value={cardNumber}
+                  onChange={this.handleInputChange}
+                />
+                <input
+                  className={`input input--small ${isValidSecurityCode ? '' : "error"}`}
+                  name="securityCode"
+                  type="text"
+                  value={securityCode}
+                  onChange={this.handleInputChange}
+                />
+              </div>
+              <button className="button" type="submit">Apply</button>
+            </section>
           )}
         </form>
-      </>
+      </section>
     );
   }
 }
