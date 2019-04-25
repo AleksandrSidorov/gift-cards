@@ -7,7 +7,7 @@ server.use(middlewares);
 server.use(jsonServer.bodyParser);
 
 server.post('/validate', (req, res) => {
-  let validateCardNumberRegex = /^\d{16}$/;
+  let validateCardNumberRegex = /^\d{19}$/;
   let validateSecurityCodeRegex = /^\d{3}$/;
 
   console.log(req.body);
