@@ -82,15 +82,17 @@ class GiftCardsContainer extends React.Component {
       <section className="container">
         <h1 className="header">Gift Cards</h1>
         <form onSubmit={this.handleSubmit}>
-          <label>
+          <div className="checkbox">
             <input
+              className="checkbox"
+              id="gift_checkbox"
               name="isCard"
               type="checkbox"
               checked={isCard}
               onChange={this.handleInputChange}
             />
-            Do you have a gift card?
-          </label>
+            <label for="gift_checkbox">Do you have a gift card?</label>
+          </div>
           {isCard && (
             <section>
               <h2 className="header header--secondary">

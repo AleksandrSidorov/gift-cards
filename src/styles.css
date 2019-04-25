@@ -61,6 +61,49 @@ body {
   margin-left: 10px;
 }
 
+.checkbox input[type="checkbox"] {
+  opacity: 0;
+}
+
+.checkbox label {
+  position: relative;
+  display: inline-block;
+}
+
+.checkbox label::before{
+  position: absolute;
+  left: -18px;
+  content: "";
+  display: inline-block;
+  background: #6F9D6B;
+  height: 14px;
+  width: 14px;
+}
+
+.checkbox label::after {
+  position: absolute;
+  left: -15px;
+  top: 3px;
+
+  content: "";
+  color: #F2F2F2;
+  display: inline-block;
+  height: 4px;
+  width: 6px;
+  border-left: 2px solid;
+  border-bottom: 2px solid;
+
+  transform: rotate(-45deg);
+}
+
+.checkbox input[type="checkbox"] + label::after {
+  content: none;
+}
+
+.checkbox input[type="checkbox"]:checked + label::after {
+  content: "";
+}
+
 .error {
   border-color: crimson;
 }
